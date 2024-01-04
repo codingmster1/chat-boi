@@ -166,13 +166,17 @@ a {
     background: #fff;
     margin: 30px auto;
     overflow: hidden;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .chat-header {
     background: var(--dark-color-a);
     color: #fff;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     padding: 15px;
     display: flex;
     align-items: center;
