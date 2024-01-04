@@ -40,8 +40,7 @@ body {
     animation: gradient 15s ease infinite;
     background-size: 400% 400%;
     background-attachment: fixed;
-    overflow: auto;
-    margin: auto;
+
 }
 
 @keyframes gradient {

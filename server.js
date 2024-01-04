@@ -11,7 +11,17 @@ const io = socketio(server);
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', socket => {
-    console.log('New WS Connection...')
+
+    //welcomes current user
+    socket.emit('message', 'Welcome to ChatBoi');
+
+    // lets everyone, except for the user, aware someone connects
+    socket.broadcast.emit('message', 'A wild user appeared!');
+
+    // when someone disconnects
+    socket.on('disconnect', () => {
+        io.emit('message', 'Oh no, user has left the chat!');
+    })
 })
 
 const PORT = 3000 || process.env.PORT;
