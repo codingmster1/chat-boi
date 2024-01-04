@@ -19,16 +19,16 @@ io.on('connection', socket => {
     socket.emit('message', formatMessage(botName, 'Welcome to ChatBoi'));
 
     // lets everyone, except for the user, aware someone connects
-    socket.broadcast.emit('message', 'A wild user appeared!');
+    socket.broadcast.emit('message', formatMessage(botName, 'A wild user appeared!'));
 
     // when someone disconnects
     socket.on('disconnect', () => {
-        io.emit('message', 'Oh no, user has left the chat!');
+        io.emit('message', formatMessage(botName, 'Oh no, user has left the chat!'));
     })
 
     //listen for chat message
     socket.on('chatMessage', (msg) => {
-        io.emit('message', msg);
+        io.emit('message', formatMessage('USER', msg));
     })
 })
 
