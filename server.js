@@ -14,21 +14,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 const botName = 'ChatBoi Bot';
 
 io.on('connection', socket => {
+    socket.on('joinRoom', ({ username, room }) => {
+        //welcomes current user
+        socket.emit('message', formatMessage(botName, 'Welcome to ChatBoi'));
 
-    //welcomes current user
-    socket.emit('message', formatMessage(botName, 'Welcome to ChatBoi'));
-
-    // lets everyone, except for the user, aware someone connects
-    socket.broadcast.emit('message', formatMessage(botName, 'A wild user appeared!'));
-
-    // when someone disconnects
-    socket.on('disconnect', () => {
-        io.emit('message', formatMessage(botName, 'Oh no, user has left the chat!'));
-    })
+        // lets everyone, except for the user, aware someone connects
+        socket.broadcast.emit('message', formatMessage(botName, 'A wild user appeared!'));
+    });
 
     //listen for chat message
     socket.on('chatMessage', (msg) => {
         io.emit('message', formatMessage('USER', msg));
+    })
+    // when someone disconnects
+    socket.on('disconnect', () => {
+        io.emit('message', formatMessage(botName, 'Oh no, user has left the chat!'));
     })
 })
 
