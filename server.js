@@ -16,11 +16,23 @@ const botName = 'ChatBoi Bot';
 
 io.on('connection', socket => {
     socket.on('joinRoom', ({ username, room }) => {
+        const user = userJoin(socket.id, username, room);
+
+
+
+        socket.join(user.room);
+
+
         //welcomes current user
         socket.emit('message', formatMessage(botName, 'Welcome to ChatBoi'));
 
         // lets everyone, except for the user, aware someone connects
-        socket.broadcast.emit('message', formatMessage(botName, 'A wild user appeared!'));
+        socket.broadcast
+            .to(user.room)
+            .emit(
+                'message',
+                formatMessage(botName, `A wild ${user.username} appeared!`)
+            );
     });
 
     //listen for chat message
@@ -33,6 +45,6 @@ io.on('connection', socket => {
     })
 })
 
-const PORT = 3000 || process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
